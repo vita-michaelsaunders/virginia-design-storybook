@@ -20,7 +20,7 @@ If the design system is somewhere else:
 VDS_ROOT=/path/to/virginia-design-system npm run storybook
 ```
 
-`vendor/virginia-design-system` is also accepted (used by GitHub Actions).
+`vendor/virginia-design-system` is also accepted.
 
 ## Static site
 
