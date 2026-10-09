@@ -22,17 +22,17 @@ VDS_ROOT=/path/to/virginia-design-system npm run storybook
 
 `vendor/virginia-design-system` is also accepted.
 
-## Static site
+## Live site
+
+Pushes to `main` publish the built catalog to GitHub Pages. The generated files stay out of git. Setup and the update flow are in [docs/PUBLISHING.md](docs/PUBLISHING.md).
+
+A local static folder, when you need one, is still:
 
 ```bash
 npm run build
 ```
 
-Output: `storybook-static/`. For GitHub project Pages:
-
-```bash
-STORYBOOK_BASE_PATH=/your-repo/ npm run build
-```
+Output: `storybook-static/` (gitignored).
 
 ## Working with upstream
 
