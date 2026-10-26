@@ -33,6 +33,12 @@ const preview = {
         },
       },
     },
+    docs: {
+      source: {
+        // Keep Show code / Docs source as story markup only (no preview wrapper).
+        excludeDecorators: true,
+      },
+    },
     options: {
       storySort: {
         order: [
