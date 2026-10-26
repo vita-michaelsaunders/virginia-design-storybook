@@ -1,4 +1,13 @@
+/**
+ * Preview cascade (matches design-system Storybook for live editing):
+ *   Commonwealth styles_export.css → local VDS packages/css → agency-overrides.css
+ *
+ * Agency sites in production use one CDN file instead:
+ *   virginia.min.css (theme + VDS), then optional agency.css
+ * See Foundations → Introduction / Using VDS.
+ */
 import "@vds-css";
+import "../styles/agency-overrides.css";
 
 const STYLES_EXPORT =
   "https://www.developer.virginia.gov/media/developer/assets/css/styles_export.css";
@@ -54,6 +63,7 @@ const preview = {
           "Components",
           "Page Templates",
           "Adaptations",
+          ["This catalog", "Customizing appearance", "*"],
           "*",
         ],
       },

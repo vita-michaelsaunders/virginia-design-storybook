@@ -1,0 +1,58 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Adaptations/Customizing appearance" />
+
+# Customizing appearance
+
+Production agency sites use **one** Commonwealth stylesheet, then optional agency CSS:
+
+```html
+<link rel="stylesheet" href="https://www.developer.virginia.gov/media/developer/virginia-design/assets/css/virginia.min.css">
+<link rel="stylesheet" href="agency.css">
+```
+
+`virginia.min.css` already includes the USWDS theme **and** thin Virginia surfaces. Do not also load `styles_export.css` unless you are on the advanced split setup.
+
+See **Foundations → Introduction** and **Using VDS** for the canonical load order. Deeper agency guidance lives in the design-system repo as `docs/CUSTOMIZE.md` when you have that checkout.
+
+## On your agency website (recommended)
+
+1. Start from the design-system **starter kit** (`examples/starter-kit/`).
+2. Copy `assets/agency.css.example` → `assets/agency.css`.
+3. Link `agency.css` **after** `virginia.min.css`.
+4. Prefer USWDS utilities in HTML; use scoped agency classes for branding.
+5. Do **not** edit `virginia.min.css` for one-offs.
+
+## Local Storybook (this repo)
+
+This catalog can show your overrides while you explore components and page templates:
+
+1. Edit [`styles/agency-overrides.css`](../styles/agency-overrides.css).
+2. Copy ideas from [`styles/agency-overrides.example.css`](../styles/agency-overrides.example.css).
+3. Refresh `npm run storybook`.
+
+That file loads **last**, after the Commonwealth theme and VDS CSS used in the Storybook preview.
+
+**Do not** edit `virginia-design-system/packages/css` for agency branding. A `git pull` on that repo overwrites those files.
+
+### How Storybook’s preview relates to production
+
+| Environment | Stylesheets |
+|-------------|-------------|
+| **Agency site (preferred)** | CDN `virginia.min.css` → optional `agency.css` |
+| **This Storybook (local)** | Commonwealth theme + VDS sources (for live editing) → `agency-overrides.css` |
+| **Hosted Pages catalog** | Shared Virginia look (`agency-overrides.css` stays empty) |
+
+Preview may load the theme and VDS as separate layers so maintainers can hot-reload package CSS. What you **copy into a real page** should still use the **one-file** CDN link above.
+
+## What to customize
+
+| Prefer | Avoid |
+|--------|--------|
+| USWDS / Commonwealth utilities in HTML (`.bg-primary`, `usa-button`) | Inventing a second full color system |
+| Overriding `--vds-*` tokens for Virginia surfaces | Editing or forking `virginia.min.css` |
+| Scoped agency classes for logo size / callouts | Broad `body` / `*` resets that break USWDS |
+
+## Accessibility
+
+Keep WCAG 2 AA contrast. Preserve `:focus-visible`. Do not remove skip links or landmarks from templates.

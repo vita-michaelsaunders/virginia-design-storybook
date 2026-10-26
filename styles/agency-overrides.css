@@ -1,0 +1,20 @@
+/**
+ * Agency overrides for local Storybook (optional).
+ *
+ * Production sites: load CDN virginia.min.css (theme + VDS in one file),
+ * then your agency.css — see Foundations → Introduction / Using VDS.
+ *
+ * This file loads last in Storybook so you can preview branding across
+ * all stories without editing the design-system checkout.
+ *
+ * Copy ideas from agency-overrides.example.css. Leave empty for the
+ * shared Virginia look (hosted Pages catalog).
+ */
+
+/* Example — uncomment to try a stronger primary (demo only):
+:root {
+  --vds-color-primary: #003366;
+  --vds-color-primary-dark: #002244;
+  --vds-color-link: #003366;
+}
+*/

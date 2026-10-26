@@ -1,0 +1,39 @@
+/**
+ * Example agency overrides for local Storybook.
+ * Copy any block into agency-overrides.css (do not rename this file).
+ *
+ * On a real agency page (preferred cascade):
+ *
+ *   1. virginia.min.css  — CDN, theme + VDS (one file)
+ *   2. agency.css        — your overrides
+ *
+ *   https://www.developer.virginia.gov/media/developer/virginia-design/assets/css/virginia.min.css
+ *
+ * Advanced split (only if you already load styles_export separately):
+ *   styles_export.css → thin vds.min.css → agency.css
+ */
+
+/* —— Tokens (Virginia surfaces: bands, chrome helpers, links in VDS) —— */
+:root {
+  /* --vds-color-primary: #003366; */
+  /* --vds-color-primary-dark: #002244; */
+  /* --vds-color-primary-darker: #001122; */
+  /* --vds-color-link: #003366; */
+  /* --vds-color-link-hover: #001a33; */
+  /* --vds-space-2: 1.25rem; */
+}
+
+/* —— Optional component polish (keep selectors specific) —— */
+
+/*
+.usa-card-group.vds-card-flat .usa-card__container {
+  border-color: #c5c9ce;
+}
+*/
+
+/*
+.vds-site-logo {
+  width: 4.5rem;
+  min-width: 4.5rem;
+}
+*/

@@ -40,5 +40,19 @@ Output: `storybook-static/` (gitignored).
 |--------|--------|
 | Component story, token, or `vds-*` CSS | Virginia Design System repo, then pull |
 | Story you are still testing | `stories/` in this directory |
+| Agency look-and-feel in local Storybook | `styles/agency-overrides.css` (see example next to it) |
 
 When a local story is ready, move it into the design-system repo’s `stories/` folder. The next checkout loads it from upstream, and you can delete the copy here.
+
+## Customizing CSS
+
+**Agency sites (preferred):** one Commonwealth file, then optional overrides:
+
+```html
+<link rel="stylesheet" href="https://www.developer.virginia.gov/media/developer/virginia-design/assets/css/virginia.min.css">
+<link rel="stylesheet" href="agency.css">
+```
+
+`virginia.min.css` is theme + Virginia surfaces. Foundations docs in this catalog describe that path.
+
+**Local Storybook:** edit [`styles/agency-overrides.css`](styles/agency-overrides.css) (ideas in [`styles/agency-overrides.example.css`](styles/agency-overrides.example.css)), then refresh `npm run storybook`. Full notes: **Adaptations → Customizing appearance**, or [`stories/Customizing.mdx`](stories/Customizing.mdx).
