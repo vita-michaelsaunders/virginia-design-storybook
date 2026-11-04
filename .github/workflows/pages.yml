@@ -1,9 +1,15 @@
 name: Publish Storybook
 
+# Builds the catalog from virginia-design-system using that repo's own
+# Storybook config, so there is one source of truth. Runs the accessibility
+# check first; publishes to GitHub Pages only if it passes.
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *" # daily, picks up design-system merges
 
 permissions:
   contents: read
@@ -17,37 +23,54 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vds
     steps:
-      - name: Checkout this repository
-        uses: actions/checkout@v4
-
       - name: Checkout Virginia Design System
         uses: actions/checkout@v4
         with:
           repository: vita-michaelsaunders/virginia-design-system
           ref: main
-          path: vendor/virginia-design-system
+          path: vds
           token: ${{ secrets.VDS_READ_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: npm
+          cache-dependency-path: vds/package-lock.json
 
       - name: Install
         run: npm ci
 
-      - name: Build Storybook
-        run: npm run build
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build and check
+        run: npm run build && python3 scripts/check.py
+
+      - name: Accessibility check (WCAG 2.2 A/AA)
+        run: npm run test:a11y
         env:
-          VDS_ROOT: vendor/virginia-design-system
+          A11Y_FORCE_BUNDLED: "1"
+
+      - name: Build Storybook for this site
+        run: npm run build-storybook
+        env:
           STORYBOOK_BASE_PATH: /${{ github.event.repository.name }}/
+
+      - name: Add starter kit download
+        run: |
+          mkdir -p storybook-static/downloads
+          cp -R examples/starter-kit "$RUNNER_TEMP/virginia-starter-kit"
+          (cd "$RUNNER_TEMP" && zip -qr "$GITHUB_WORKSPACE/vds/storybook-static/downloads/virginia-starter-kit.zip" virginia-starter-kit)
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: storybook-static
+          path: vds/storybook-static
 
   deploy:
     needs: build
